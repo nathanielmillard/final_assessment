@@ -12,7 +12,11 @@ export class App extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.updateUrls()
+  }
+
+  updateUrls = async () => {
     let urls = await getUrls()
     this.setState({urls: urls})
   }
@@ -22,9 +26,8 @@ export class App extends Component {
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm updateURls={this.updateUrls}/>
         </header>
-
         <UrlContainer urls={this.state.urls}/>
       </main>
     );
