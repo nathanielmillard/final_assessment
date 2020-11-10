@@ -24,7 +24,7 @@ export class App extends Component {
   render() {
     return (
       <main className="App">
-        <header>
+        <header data-testid='header'>
           <h1>URL Shortener</h1>
           <UrlForm updateURls={this.updateUrls}/>
         </header>
