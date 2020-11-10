@@ -7,11 +7,12 @@ import {postUrl} from '../../apiCalls';
 jest.mock('../../apiCalls')
 
 describe('UrlForm', ()=> {
-  it('Should redner appropriate form elements', () => {
+  it('Should render appropriate form elements', () => {
     let mockUpdateURls = jest.fn()
     render(
       <UrlForm
-       updateURls={mockUpdateURls}
+      urls={[]}
+      updateURls={mockUpdateURls}
       />
     )
     let inputs = screen.getAllByRole('textbox')
@@ -28,7 +29,8 @@ describe('UrlForm', ()=> {
     let mockUpdateURls = jest.fn()
     render(
       <UrlForm
-       updateURls={mockUpdateURls}
+      urls={[]}
+      updateURls={mockUpdateURls}
       />
     )
     let titleInput = screen.getByPlaceholderText('Title...')
@@ -42,10 +44,11 @@ describe('UrlForm', ()=> {
     let mockUpdateURls = jest.fn()
     render(
       <UrlForm
+       urls={[]}
        updateURls={mockUpdateURls}
       />
     )
-    let button = screen.getByRole('button')
+    let button = screen.getByText('Shorten Please!')
     let titleInput = screen.getByPlaceholderText('Title...')
     let urlInput = screen.getByPlaceholderText('URL to Shorten...')
     userEvent.type(titleInput, 'google')
@@ -55,6 +58,6 @@ describe('UrlForm', ()=> {
     userEvent.click(button)
     expect(mockUpdateURls).toHaveBeenCalledTimes(1)
     expect(postUrl).toHaveBeenCalledTimes(1)
-    expect(postUrl).toHaveBeenCalledWith('www.google.com', 'google')
+    expect(postUrl).toHaveBeenCalledWith(1, 'www.google.com', 'google')
   })
 })
