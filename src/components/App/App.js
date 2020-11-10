@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, deleteUrl } from '../../apiCalls.js';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -20,15 +20,19 @@ export class App extends Component {
     let urls = await getUrls()
     this.setState({urls: urls})
   }
+  deleteUrl = async (e) => {
+    await deleteUrl(e.target.id)
+    this.updateUrls()
+  }
 
   render() {
     return (
       <main className="App">
-        <header>
+        <header data-testid='header'>
           <h1>URL Shortener</h1>
-          <UrlForm updateURls={this.updateUrls}/>
+          <UrlForm urls={this.state.urls} updateURls={this.updateUrls}/>
         </header>
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer deleteUrl={this.deleteUrl} urls={this.state.urls}/>
       </main>
     );
   }
